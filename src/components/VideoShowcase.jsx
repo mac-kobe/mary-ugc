@@ -134,14 +134,14 @@ export default function VideoShowcase({ onOpenPortfolio }) {
                 onClick={() => setActive(i)}
               >
                 {/* Video - 9:16 aspect ratio */}
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-warm bg-charcoal">
+                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-warm bg-linen">
                   <video
                     ref={(el) => (videoRefs.current[i] = el)}
                     src={src}
                     muted={muted}
                     loop
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     className="w-full h-full object-cover"
                   />
                 </div>
