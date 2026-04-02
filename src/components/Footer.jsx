@@ -2,7 +2,7 @@ import { ExternalLink } from 'lucide-react'
 
 const quickLinks = [
   { label: 'About', href: '#about' },
-  { label: 'Content', href: '#content' },
+  { label: 'Content', href: '#videos' },
   { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },
 ]

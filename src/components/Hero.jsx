@@ -41,13 +41,13 @@ export default function Hero() {
 
             {/* Headline */}
             <h1 className="hero-headline font-playfair text-5xl sm:text-6xl lg:text-7xl text-charcoal mb-5 leading-[1.1]">
-              Hi, I'm Mary
+              Hi, I'm Mary!
             </h1>
 
             {/* Subheadline */}
             <p className="hero-sub text-lg sm:text-xl text-charcoal/70 font-inter max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
               Mom, teacher, and content creator helping brands connect with real
-              families through authentic, relatable content.
+              families through authentic, relatable content!
             </p>
 
             {/* CTA Buttons */}

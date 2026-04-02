@@ -105,11 +105,11 @@ export default function Services() {
           <div className="services-left lg:flex-1">
             <p className="section-label">UGC Services</p>
             <h2 className="section-heading">
-              Let Me Create Content for Your Brand
+              Let Me Create Content for Your Brand!
             </h2>
             <p className="font-inter text-charcoal/70 leading-relaxed mb-8">
               I create authentic, scroll-stopping content that resonates with
-              real families. Whether it's a recipe featuring your product, a
+              real families! Whether it's a recipe featuring your product, a
               skincare routine, or an unboxing that feels like a friend's
               recommendation. I bring genuine enthusiasm and three years of
               content creation experience to every project.

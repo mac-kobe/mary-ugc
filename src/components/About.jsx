@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const details = [
-  { icon: MapPin, text: 'South Florida' },
+  { icon: MapPin, text: 'West Michigan' },
   { icon: GraduationCap, text: 'Spanish Teacher' },
   { icon: Heart, text: 'Mom of Two' },
   { icon: Globe, text: 'Bilingual (EN/ES)' },
@@ -67,16 +67,15 @@ export default function About() {
 
             <div className="space-y-4 text-charcoal/70 font-inter leading-relaxed mb-8">
               <p>
-                I'm a 32-year-old mom of two little girls, a middle and high
+                I'm a mom of two little girls, a middle and high
                 school Spanish teacher, and a content creator who's been showing
-                up on TikTok every day for three years straight.
+                up on TikTok every single day for three years!
               </p>
               <p>
                 My content is rooted in real life. Budget-friendly recipes my
                 family actually eats, skincare that works on a teacher's
                 schedule, and the beautiful chaos of raising two girls under
-                five. I create in both English and Spanish because that's how my
-                family lives.
+                five.
               </p>
               <p>
                 I believe the best content comes from authenticity. When I share

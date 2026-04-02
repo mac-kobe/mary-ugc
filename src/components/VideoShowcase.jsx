@@ -89,7 +89,7 @@ export default function VideoShowcase({ onOpenPortfolio }) {
         {/* Header */}
         <div className="video-header text-center mb-14">
           <p className="section-label">Featured Content</p>
-          <h2 className="section-heading">Videos That Perform</h2>
+          <h2 className="section-heading">Some of my work!</h2>
         </div>
 
         {/* Carousel */}

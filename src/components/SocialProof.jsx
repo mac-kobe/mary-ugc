@@ -67,7 +67,7 @@ export default function SocialProof() {
   }, [])
 
   return (
-    <section id="content" ref={sectionRef} className="py-20 md:py-28 bg-terracotta relative z-10 mt-[60px] mb-[60px]">
+    <section ref={sectionRef} className="py-20 md:py-28 bg-terracotta relative z-10 mt-[60px] mb-[60px]">
       {/* Wave top */}
       <div className="absolute left-0 right-0 bottom-full pointer-events-none">
         <svg
@@ -110,8 +110,7 @@ export default function SocialProof() {
 
         {/* Quote */}
         <p className="proof-quote font-playfair italic text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-          "My drain catcher video hit 673K views because it was real, useful,
-          and relatable. That's the content I create for brands too."
+          "The best brand partnerships feel like recommendations from a friend. That's exactly what I create."
         </p>
       </div>
 
