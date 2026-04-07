@@ -5,21 +5,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const CDN = 'https://zq6erlmzzbr6p1bk.public.blob.vercel-storage.com/videos'
+const VIDEO_BASE = '/videos'
 
 const posterFor = (src) => {
-  const filename = src.split('/').pop().replace('.MP4', '.jpg')
+  const filename = src.split('/').pop().replace('.mp4', '.jpg')
   return `/images/posters/${filename}`
 }
 
 const videos = [
-  { title: 'Drain Catcher Hack', src: `${CDN}/drain-catcher.MP4` },
-  { title: 'Alani Drink', src: `${CDN}/alani-drink-3.MP4` },
-  { title: 'Korean Skincare', src: `${CDN}/korean-skincare.MP4` },
-  { title: 'Penne Recipe', src: `${CDN}/penne-recipe.MP4` },
-  { title: 'Nightly Skincare', src: `${CDN}/nightly-skincare.MP4` },
-  { title: 'Ellaola Vitamin', src: `${CDN}/ellaola-vitamin.MP4` },
-  { title: 'Xmas Slippers', src: `${CDN}/xmas-slippers.MP4` },
+  { title: 'Drain Catcher Hack', src: `${VIDEO_BASE}/drain-catcher.mp4` },
+  { title: 'Alani Drink', src: `${VIDEO_BASE}/alani-drink-3.mp4` },
+  { title: 'Korean Skincare', src: `${VIDEO_BASE}/korean-skincare.mp4` },
+  { title: 'Penne Recipe', src: `${VIDEO_BASE}/penne-recipe.mp4` },
+  { title: 'Nightly Skincare', src: `${VIDEO_BASE}/nightly-skincare.mp4` },
+  { title: 'Ellaola Vitamin', src: `${VIDEO_BASE}/ellaola-vitamin.mp4` },
+  { title: 'Xmas Slippers', src: `${VIDEO_BASE}/xmas-slippers.mp4` },
 ]
 
 export default function VideoShowcase({ onOpenPortfolio }) {
@@ -71,12 +71,17 @@ export default function VideoShowcase({ onOpenPortfolio }) {
     })
   }, [active])
 
-  // Sync muted state to video elements via refs (React doesn't reliably update the muted DOM property)
-  useEffect(() => {
-    videoRefs.current.forEach((vid) => {
-      if (vid) vid.muted = muted
+  // Toggle muted — set directly on video elements synchronously in the click handler
+  // so the browser treats it as a user gesture (useEffect is async and gets blocked)
+  const handleToggleMute = () => {
+    setMuted((prev) => {
+      const next = !prev
+      videoRefs.current.forEach((vid) => {
+        if (vid) vid.muted = next
+      })
+      return next
     })
-  }, [muted])
+  }
 
   // Scroll active card into view with smooth GSAP animation
   useEffect(() => {
@@ -124,7 +129,7 @@ export default function VideoShowcase({ onOpenPortfolio }) {
 
           {/* Mute toggle */}
           <button
-            onClick={() => setMuted((m) => !m)}
+            onClick={handleToggleMute}
             aria-label={muted ? 'Unmute' : 'Mute'}
             className="absolute top-3 right-3 lg:right-[-2rem] z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-warm flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-white transition-colors duration-200"
           >

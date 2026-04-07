@@ -3,6 +3,4 @@ dist/
 .DS_Store
 .vercel/
 .env*.local
-*.MP4
-public/videos/
 .vercel

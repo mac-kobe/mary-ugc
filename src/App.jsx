@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -11,32 +11,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Portfolio from './components/Portfolio'
 
-function App() {
-  const [showPortfolio, setShowPortfolio] = useState(false)
-
-  const openPortfolio = useCallback(() => {
-    setShowPortfolio(true)
-    window.history.pushState({ view: 'portfolio' }, '')
-  }, [])
-
-  const closePortfolio = useCallback(() => {
-    setShowPortfolio(false)
-  }, [])
-
-  useEffect(() => {
-    const onPopState = () => {
-      setShowPortfolio(false)
-    }
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
-  }, [])
-
-  if (showPortfolio) {
-    return <Portfolio onClose={() => {
-      closePortfolio()
-      window.history.back()
-    }} />
-  }
+function Home() {
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-cream">
@@ -45,7 +21,7 @@ function App() {
         <Hero />
         <About />
         <BrandCategories />
-        <VideoShowcase onOpenPortfolio={openPortfolio} />
+        <VideoShowcase onOpenPortfolio={() => navigate('/content')} />
         <SocialProof />
         <ContentNiches />
         <Services />
@@ -53,6 +29,15 @@ function App() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/content" element={<Portfolio />} />
+    </Routes>
   )
 }
 

@@ -1,35 +1,36 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { Play, Pause, Volume2, VolumeX, ArrowLeft, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Volume2, VolumeX, ArrowLeft, X } from 'lucide-react'
 import gsap from 'gsap'
 
-const CDN = 'https://zq6erlmzzbr6p1bk.public.blob.vercel-storage.com/videos'
+const VIDEO_BASE = '/videos'
 
 const posterFor = (src) => {
-  const filename = src.split('/').pop().replace('.MP4', '.jpg')
+  const filename = src.split('/').pop().replace('.mp4', '.jpg')
   return `/images/posters/${filename}`
 }
 
 const allVideos = [
-  { title: 'Drain Catcher Hack', src: `${CDN}/drain-catcher.MP4`, category: 'Product' },
-  { title: 'Arroz con Pollo', src: `${CDN}/arroz-recipe.MP4`, category: 'Recipe' },
-  { title: 'Breakfast Recipe', src: `${CDN}/breakfast-recipe.MP4`, category: 'Recipe' },
-  { title: 'Penne Recipe', src: `${CDN}/penne-recipe.MP4`, category: 'Recipe' },
-  { title: 'Meatball Recipe', src: `${CDN}/meatball-recipe.MP4`, category: 'Recipe' },
-  { title: 'Alani Drink', src: `${CDN}/alani-drink.MP4`, category: 'Drink' },
-  { title: 'Xmas Slippers', src: `${CDN}/xmas-slippers.MP4`, category: 'Product' },
-  { title: 'Alani Drink #2', src: `${CDN}/alani-drink-2.MP4`, category: 'Drink' },
-  { title: 'Alani Drink #3', src: `${CDN}/alani-drink-3.MP4`, category: 'Drink' },
-  { title: 'Bloom Drink', src: `${CDN}/bloom-drink.MP4`, category: 'Drink' },
-  { title: 'Coffee Mate Drink', src: `${CDN}/coffeemate-drink.MP4`, category: 'Drink' },
-  { title: 'MaryRuth Drink', src: `${CDN}/maryruth-drink.MP4`, category: 'Drink' },
-  { title: 'Ellaola Vitamin', src: `${CDN}/ellaola-vitamin.MP4`, category: 'Product' },
-  { title: 'Korean Skincare', src: `${CDN}/korean-skincare.MP4`, category: 'Skincare' },
-  { title: 'Korean Skincare #2', src: `${CDN}/korean-skincare-2.MP4`, category: 'Skincare' },
-  { title: "L'Occitane Shower", src: `${CDN}/loccitane-shower.MP4`, category: 'Skincare' },
-  { title: 'Medicube Skincare', src: `${CDN}/medicube-skincare.MP4`, category: 'Skincare' },
-  { title: 'Nightly Skincare', src: `${CDN}/nightly-skincare.MP4`, category: 'Skincare' },
-  { title: 'Parive Skincare', src: `${CDN}/parive-skincare.MP4`, category: 'Skincare' },
-  { title: 'Tarte Makeup', src: `${CDN}/tarte-makeup.MP4`, category: 'Skincare' },
+  { title: 'Drain Catcher Hack', src: `${VIDEO_BASE}/drain-catcher.mp4`, category: 'Product' },
+  { title: 'Arroz con Pollo', src: `${VIDEO_BASE}/arroz-recipe.mp4`, category: 'Recipe' },
+  { title: 'Breakfast Recipe', src: `${VIDEO_BASE}/breakfast-recipe.mp4`, category: 'Recipe' },
+  { title: 'Penne Recipe', src: `${VIDEO_BASE}/penne-recipe.mp4`, category: 'Recipe' },
+  { title: 'Meatball Recipe', src: `${VIDEO_BASE}/meatball-recipe.mp4`, category: 'Recipe' },
+  { title: 'Alani Drink', src: `${VIDEO_BASE}/alani-drink.mp4`, category: 'Drink' },
+  { title: 'Xmas Slippers', src: `${VIDEO_BASE}/xmas-slippers.mp4`, category: 'Product' },
+  { title: 'Alani Drink #2', src: `${VIDEO_BASE}/alani-drink-2.mp4`, category: 'Drink' },
+  { title: 'Alani Drink #3', src: `${VIDEO_BASE}/alani-drink-3.mp4`, category: 'Drink' },
+  { title: 'Bloom Drink', src: `${VIDEO_BASE}/bloom-drink.mp4`, category: 'Drink' },
+  { title: 'Coffee Mate Drink', src: `${VIDEO_BASE}/coffeemate-drink.mp4`, category: 'Drink' },
+  { title: 'MaryRuth Drink', src: `${VIDEO_BASE}/maryruth-drink.mp4`, category: 'Drink' },
+  { title: 'Ellaola Vitamin', src: `${VIDEO_BASE}/ellaola-vitamin.mp4`, category: 'Product' },
+  { title: 'Korean Skincare', src: `${VIDEO_BASE}/korean-skincare.mp4`, category: 'Skincare' },
+  { title: 'Korean Skincare #2', src: `${VIDEO_BASE}/korean-skincare-2.mp4`, category: 'Skincare' },
+  { title: "L'Occitane Shower", src: `${VIDEO_BASE}/loccitane-shower.mp4`, category: 'Skincare' },
+  { title: 'Medicube Skincare', src: `${VIDEO_BASE}/medicube-skincare.mp4`, category: 'Skincare' },
+  { title: 'Nightly Skincare', src: `${VIDEO_BASE}/nightly-skincare.mp4`, category: 'Skincare' },
+  { title: 'Parive Skincare', src: `${VIDEO_BASE}/parive-skincare.mp4`, category: 'Skincare' },
+  { title: 'Tarte Makeup', src: `${VIDEO_BASE}/tarte-makeup.mp4`, category: 'Skincare' },
 ]
 
 const categories = ['All', ...new Set(allVideos.map((v) => v.category))]
@@ -116,11 +117,11 @@ function VideoModal({ video, muted, modalVideoRef, onClose, onToggleMute }) {
   )
 }
 
-export default function Portfolio({ onClose }) {
+export default function Portfolio() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState('All')
   const [activeVideo, setActiveVideo] = useState(null)
   const [muted, setMuted] = useState(true)
-  const [playingIdx, setPlayingIdx] = useState(null)
   const [loadedSrcs, setLoadedSrcs] = useState({})
   const videoRefs = useRef({})
   const cardRefs = useRef([])
@@ -130,11 +131,25 @@ export default function Portfolio({ onClose }) {
 
   const filtered = filter === 'All' ? allVideos : allVideos.filter((v) => v.category === filter)
 
-  // Open video modal with history entry
+  // Toggle muted — set directly on all video elements in the click handler (synchronous)
+  // so the browser treats it as a user gesture. React's muted prop doesn't reliably update the DOM.
+  const handleToggleMute = useCallback(() => {
+    setMuted((prev) => {
+      const next = !prev
+      Object.values(videoRefs.current).forEach((vid) => {
+        if (vid) vid.muted = next
+      })
+      if (modalVideoRef.current) {
+        modalVideoRef.current.muted = next
+      }
+      return next
+    })
+  }, [])
+
+  // Open video modal
   const openVideo = useCallback((idx) => {
     setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
     setActiveVideo(idx)
-    window.history.pushState({ view: 'video' }, '')
   }, [])
 
   // Close video modal
@@ -142,30 +157,8 @@ export default function Portfolio({ onClose }) {
     setActiveVideo(null)
   }, [])
 
-  // Handle browser back button for video modal
-  useEffect(() => {
-    const onPopState = () => {
-      if (activeVideo !== null) {
-        setActiveVideo(null)
-      }
-    }
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
-  }, [activeVideo])
-
-  // Sync muted state to all video elements via refs (React doesn't reliably update the muted DOM property)
-  useEffect(() => {
-    Object.values(videoRefs.current).forEach((vid) => {
-      if (vid) vid.muted = muted
-    })
-    if (modalVideoRef.current) {
-      modalVideoRef.current.muted = muted
-    }
-  }, [muted])
-
   // Fade-in + lazy load videos on scroll
   useEffect(() => {
-    // Wait a frame so refs are populated after render
     const raf = requestAnimationFrame(() => {
       const cards = cardRefs.current.filter(Boolean)
       if (!cards.length) return
@@ -202,40 +195,13 @@ export default function Portfolio({ onClose }) {
     }
   }, [filter])
 
-  const togglePlay = useCallback((e, idx) => {
-    e.stopPropagation()
-    // Ensure the video src is loaded
-    setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
-
-    const vid = videoRefs.current[idx]
-    if (!vid) return
-
-    if (playingIdx === idx) {
-      vid.pause()
-      setPlayingIdx(null)
-    } else {
-      if (playingIdx !== null && videoRefs.current[playingIdx]) {
-        videoRefs.current[playingIdx].pause()
-      }
-      // If src was just set, wait for it to be ready
-      const tryPlay = () => vid.play().catch(() => {})
-      if (vid.readyState >= 2) {
-        tryPlay()
-      } else {
-        vid.addEventListener('loadeddata', tryPlay, { once: true })
-      }
-      setPlayingIdx(idx)
-    }
-  }, [playingIdx])
-
   useEffect(() => {
-    setPlayingIdx(null)
     setLoadedSrcs({})
     videoRefs.current = {}
     cardRefs.current = []
   }, [filter])
 
-  // Distribute videos into columns manually for offset control
+  // Distribute videos into columns
   const colCount = typeof window !== 'undefined'
     ? window.innerWidth >= 640 ? 3 : 2
     : 3
@@ -245,30 +211,23 @@ export default function Portfolio({ onClose }) {
     columns[i % colCount].push({ ...video, globalIdx: i })
   })
 
-  // Fullscreen modal
-  if (activeVideo !== null) {
-    const video = filtered[activeVideo]
-    return (
-      <VideoModal
-        video={video}
-        muted={muted}
-        modalVideoRef={modalVideoRef}
-        onClose={() => {
-          closeVideo()
-          window.history.back()
-        }}
-        onToggleMute={() => setMuted((m) => !m)}
-      />
-    )
-  }
-
   return (
     <div ref={scrollRef} className="fixed inset-0 z-[90] bg-cream overflow-y-auto overscroll-contain">
+      {/* Fullscreen modal — rendered on top so gallery keeps its scroll position */}
+      {activeVideo !== null && (
+        <VideoModal
+          video={filtered[activeVideo]}
+          muted={muted}
+          modalVideoRef={modalVideoRef}
+          onClose={closeVideo}
+          onToggleMute={handleToggleMute}
+        />
+      )}
       {/* Sticky header */}
       <div className="sticky top-0 z-10 bg-cream/90 backdrop-blur-md border-b border-charcoal/5">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => navigate('/')}
             className="flex items-center gap-2 font-inter text-sm text-charcoal/60 hover:text-terracotta transition-colors min-h-[44px]"
           >
             <ArrowLeft size={18} />
@@ -276,7 +235,7 @@ export default function Portfolio({ onClose }) {
           </button>
           <p className="font-playfair text-xl text-charcoal">Content Gallery</p>
           <button
-            onClick={() => setMuted((m) => !m)}
+            onClick={handleToggleMute}
             className="w-10 h-10 rounded-full bg-linen flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-white transition-colors"
             aria-label={muted ? 'Unmute all' : 'Mute all'}
           >
@@ -323,7 +282,6 @@ export default function Portfolio({ onClose }) {
               style={{ paddingTop: `${colOffsets[colIdx % colOffsets.length]}px` }}
             >
               {col.map(({ globalIdx, ...video }, rowIdx) => {
-                const isPlaying = playingIdx === globalIdx
                 const topMargin = rowIdx === 0 ? 0 : 48
 
                 return (
@@ -356,19 +314,6 @@ export default function Portfolio({ onClose }) {
                       <span className="absolute top-3 left-3 px-3 py-1.5 bg-white/90 backdrop-blur-sm text-charcoal text-xs font-inter font-medium rounded-full">
                         {video.category}
                       </span>
-
-                      {/* Play/Pause */}
-                      <button
-                        onClick={(e) => togglePlay(e, globalIdx)}
-                        className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
-                        aria-label={isPlaying ? 'Pause' : 'Play'}
-                      >
-                        {isPlaying ? (
-                          <Pause size={14} className="text-charcoal" fill="currentColor" />
-                        ) : (
-                          <Play size={14} className="text-charcoal ml-0.5" fill="currentColor" />
-                        )}
-                      </button>
 
                       {/* Title */}
                       <div className="absolute bottom-3 left-3 right-3">
