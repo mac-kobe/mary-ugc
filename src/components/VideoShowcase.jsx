@@ -71,6 +71,13 @@ export default function VideoShowcase({ onOpenPortfolio }) {
     })
   }, [active])
 
+  // Sync muted state to video elements via refs (React doesn't reliably update the muted DOM property)
+  useEffect(() => {
+    videoRefs.current.forEach((vid) => {
+      if (vid) vid.muted = muted
+    })
+  }, [muted])
+
   // Scroll active card into view with smooth GSAP animation
   useEffect(() => {
     if (!trackRef.current) return

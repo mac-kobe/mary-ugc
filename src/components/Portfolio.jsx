@@ -36,6 +36,86 @@ const categories = ['All', ...new Set(allVideos.map((v) => v.category))]
 
 const colOffsets = [0, 0, 0]
 
+function VideoModal({ video, muted, modalVideoRef, onClose, onToggleMute }) {
+  const [dragY, setDragY] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const startY = useRef(0)
+
+  const onTouchStart = (e) => {
+    startY.current = e.touches[0].clientY
+    setDragging(true)
+  }
+
+  const onTouchMove = (e) => {
+    if (!dragging) return
+    const dy = e.touches[0].clientY - startY.current
+    if (dy > 0) setDragY(dy)
+  }
+
+  const onTouchEnd = () => {
+    setDragging(false)
+    if (dragY > 120) {
+      onClose()
+    } else {
+      setDragY(0)
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-charcoal/95 flex items-center justify-center"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+        aria-label="Close"
+      >
+        <X size={24} />
+      </button>
+      <div
+        className="w-full max-w-sm mx-4 transition-transform"
+        style={{
+          transform: `translateY(${dragY}px)`,
+          opacity: Math.max(0, 1 - dragY / 300),
+          transition: dragging ? 'none' : 'transform 0.3s ease, opacity 0.3s ease',
+        }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Swipe hint */}
+        <div className="flex justify-center mb-3">
+          <div className="w-10 h-1 rounded-full bg-white/40" />
+        </div>
+        <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-black">
+          <video
+            ref={modalVideoRef}
+            src={video.src}
+            poster={posterFor(video.src)}
+            autoPlay
+            loop
+            playsInline
+            muted={muted}
+            className="w-full h-full object-cover"
+          />
+          <button
+            onClick={onToggleMute}
+            className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+            aria-label={muted ? 'Unmute' : 'Mute'}
+          >
+            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
+        </div>
+        <p className="text-center text-white font-inter font-medium mt-4">{video.title}</p>
+        <p className="text-center text-white/50 font-inter text-sm mt-1">{video.category}</p>
+      </div>
+    </div>
+  )
+}
+
 export default function Portfolio({ onClose }) {
   const [filter, setFilter] = useState('All')
   const [activeVideo, setActiveVideo] = useState(null)
@@ -46,8 +126,42 @@ export default function Portfolio({ onClose }) {
   const cardRefs = useRef([])
   const scrollRef = useRef(null)
   const observerRef = useRef(null)
+  const modalVideoRef = useRef(null)
 
   const filtered = filter === 'All' ? allVideos : allVideos.filter((v) => v.category === filter)
+
+  // Open video modal with history entry
+  const openVideo = useCallback((idx) => {
+    setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
+    setActiveVideo(idx)
+    window.history.pushState({ view: 'video' }, '')
+  }, [])
+
+  // Close video modal
+  const closeVideo = useCallback(() => {
+    setActiveVideo(null)
+  }, [])
+
+  // Handle browser back button for video modal
+  useEffect(() => {
+    const onPopState = () => {
+      if (activeVideo !== null) {
+        setActiveVideo(null)
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [activeVideo])
+
+  // Sync muted state to all video elements via refs (React doesn't reliably update the muted DOM property)
+  useEffect(() => {
+    Object.values(videoRefs.current).forEach((vid) => {
+      if (vid) vid.muted = muted
+    })
+    if (modalVideoRef.current) {
+      modalVideoRef.current.muted = muted
+    }
+  }, [muted])
 
   // Fade-in + lazy load videos on scroll
   useEffect(() => {
@@ -135,37 +249,16 @@ export default function Portfolio({ onClose }) {
   if (activeVideo !== null) {
     const video = filtered[activeVideo]
     return (
-      <div className="fixed inset-0 z-[100] bg-charcoal/95 flex items-center justify-center">
-        <button
-          onClick={() => setActiveVideo(null)}
-          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-          aria-label="Close"
-        >
-          <X size={20} />
-        </button>
-        <div className="w-full max-w-sm mx-4">
-          <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-black">
-            <video
-              src={video.src}
-              poster={posterFor(video.src)}
-              autoPlay
-              loop
-              playsInline
-              muted={muted}
-              className="w-full h-full object-cover"
-            />
-            <button
-              onClick={() => setMuted((m) => !m)}
-              className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-              aria-label={muted ? 'Unmute' : 'Mute'}
-            >
-              {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            </button>
-          </div>
-          <p className="text-center text-white font-inter font-medium mt-4">{video.title}</p>
-          <p className="text-center text-white/50 font-inter text-sm mt-1">{video.category}</p>
-        </div>
-      </div>
+      <VideoModal
+        video={video}
+        muted={muted}
+        modalVideoRef={modalVideoRef}
+        onClose={() => {
+          closeVideo()
+          window.history.back()
+        }}
+        onToggleMute={() => setMuted((m) => !m)}
+      />
     )
   }
 
@@ -243,10 +336,7 @@ export default function Portfolio({ onClose }) {
                   >
                     <div
                       className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-charcoal cursor-pointer shadow-warm hover:shadow-warm-xl transition-shadow duration-300"
-                      onClick={() => {
-                        setLoadedSrcs((prev) => ({ ...prev, [globalIdx]: true }))
-                        setActiveVideo(globalIdx)
-                      }}
+                      onClick={() => openVideo(globalIdx)}
                     >
                       <video
                         ref={(el) => (videoRefs.current[globalIdx] = el)}

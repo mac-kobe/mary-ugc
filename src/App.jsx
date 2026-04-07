@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -14,8 +14,28 @@ import Portfolio from './components/Portfolio'
 function App() {
   const [showPortfolio, setShowPortfolio] = useState(false)
 
+  const openPortfolio = useCallback(() => {
+    setShowPortfolio(true)
+    window.history.pushState({ view: 'portfolio' }, '')
+  }, [])
+
+  const closePortfolio = useCallback(() => {
+    setShowPortfolio(false)
+  }, [])
+
+  useEffect(() => {
+    const onPopState = () => {
+      setShowPortfolio(false)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
   if (showPortfolio) {
-    return <Portfolio onClose={() => setShowPortfolio(false)} />
+    return <Portfolio onClose={() => {
+      closePortfolio()
+      window.history.back()
+    }} />
   }
 
   return (
@@ -25,7 +45,7 @@ function App() {
         <Hero />
         <About />
         <BrandCategories />
-        <VideoShowcase onOpenPortfolio={() => setShowPortfolio(true)} />
+        <VideoShowcase onOpenPortfolio={openPortfolio} />
         <SocialProof />
         <ContentNiches />
         <Services />
