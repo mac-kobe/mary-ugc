@@ -7,6 +7,11 @@ gsap.registerPlugin(ScrollTrigger)
 
 const CDN = 'https://zq6erlmzzbr6p1bk.public.blob.vercel-storage.com/videos'
 
+const posterFor = (src) => {
+  const filename = src.split('/').pop().replace('.MP4', '.jpg')
+  return `/images/posters/${filename}`
+}
+
 const videos = [
   { title: 'Drain Catcher Hack', src: `${CDN}/drain-catcher.MP4` },
   { title: 'Alani Drink', src: `${CDN}/alani-drink-3.MP4` },
@@ -137,11 +142,12 @@ export default function VideoShowcase({ onOpenPortfolio }) {
                 <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-warm bg-linen">
                   <video
                     ref={(el) => (videoRefs.current[i] = el)}
-                    src={src}
+                    src={Math.abs(i - active) <= 1 || (active === 0 && i === videos.length - 1) || (active === videos.length - 1 && i === 0) ? src : undefined}
+                    poster={posterFor(src)}
                     muted={muted}
                     loop
                     playsInline
-                    preload="auto"
+                    preload={i === active ? 'auto' : 'none'}
                     className="w-full h-full object-cover"
                   />
                 </div>

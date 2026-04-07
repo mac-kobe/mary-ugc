@@ -4,6 +4,11 @@ import gsap from 'gsap'
 
 const CDN = 'https://zq6erlmzzbr6p1bk.public.blob.vercel-storage.com/videos'
 
+const posterFor = (src) => {
+  const filename = src.split('/').pop().replace('.MP4', '.jpg')
+  return `/images/posters/${filename}`
+}
+
 const allVideos = [
   { title: 'Drain Catcher Hack', src: `${CDN}/drain-catcher.MP4`, category: 'Product' },
   { title: 'Arroz con Pollo', src: `${CDN}/arroz-recipe.MP4`, category: 'Recipe' },
@@ -40,45 +45,54 @@ export default function Portfolio({ onClose }) {
   const videoRefs = useRef({})
   const cardRefs = useRef([])
   const scrollRef = useRef(null)
+  const observerRef = useRef(null)
 
   const filtered = filter === 'All' ? allVideos : allVideos.filter((v) => v.category === filter)
 
   // Fade-in + lazy load videos on scroll
   useEffect(() => {
-    const cards = cardRefs.current.filter(Boolean)
-    if (!cards.length) return
+    // Wait a frame so refs are populated after render
+    const raf = requestAnimationFrame(() => {
+      const cards = cardRefs.current.filter(Boolean)
+      if (!cards.length) return
 
-    gsap.set(cards, { opacity: 0, y: 40 })
+      gsap.set(cards, { opacity: 0, y: 40 })
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Fade in the card
-            gsap.to(entry.target, {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: 'power2.out',
-            })
-            // Lazy load the video src
-            const idx = entry.target.dataset.idx
-            if (idx !== undefined) {
-              setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              gsap.to(entry.target, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: 'power2.out',
+              })
+              const idx = entry.target.dataset.idx
+              if (idx !== undefined) {
+                setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
+              }
+              observer.unobserve(entry.target)
             }
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { root: scrollRef.current, rootMargin: '200px', threshold: 0.1 }
-    )
+          })
+        },
+        { root: scrollRef.current, rootMargin: '400px', threshold: 0.05 }
+      )
 
-    cards.forEach((card) => observer.observe(card))
-    return () => observer.disconnect()
+      cards.forEach((card) => observer.observe(card))
+      observerRef.current = observer
+    })
+    return () => {
+      cancelAnimationFrame(raf)
+      if (observerRef.current) observerRef.current.disconnect()
+    }
   }, [filter])
 
   const togglePlay = useCallback((e, idx) => {
     e.stopPropagation()
+    // Ensure the video src is loaded
+    setLoadedSrcs((prev) => ({ ...prev, [idx]: true }))
+
     const vid = videoRefs.current[idx]
     if (!vid) return
 
@@ -89,13 +103,20 @@ export default function Portfolio({ onClose }) {
       if (playingIdx !== null && videoRefs.current[playingIdx]) {
         videoRefs.current[playingIdx].pause()
       }
-      vid.play().catch(() => {})
+      // If src was just set, wait for it to be ready
+      const tryPlay = () => vid.play().catch(() => {})
+      if (vid.readyState >= 2) {
+        tryPlay()
+      } else {
+        vid.addEventListener('loadeddata', tryPlay, { once: true })
+      }
       setPlayingIdx(idx)
     }
   }, [playingIdx])
 
   useEffect(() => {
     setPlayingIdx(null)
+    setLoadedSrcs({})
     videoRefs.current = {}
     cardRefs.current = []
   }, [filter])
@@ -126,6 +147,7 @@ export default function Portfolio({ onClose }) {
           <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-black">
             <video
               src={video.src}
+              poster={posterFor(video.src)}
               autoPlay
               loop
               playsInline
@@ -221,15 +243,19 @@ export default function Portfolio({ onClose }) {
                   >
                     <div
                       className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-charcoal cursor-pointer shadow-warm hover:shadow-warm-xl transition-shadow duration-300"
-                      onClick={() => setActiveVideo(globalIdx)}
+                      onClick={() => {
+                        setLoadedSrcs((prev) => ({ ...prev, [globalIdx]: true }))
+                        setActiveVideo(globalIdx)
+                      }}
                     >
                       <video
                         ref={(el) => (videoRefs.current[globalIdx] = el)}
                         src={loadedSrcs[globalIdx] ? video.src : undefined}
+                        poster={posterFor(video.src)}
                         muted={muted}
                         loop
                         playsInline
-                        preload="auto"
+                        preload="metadata"
                         className="w-full h-full object-cover"
                       />
 
