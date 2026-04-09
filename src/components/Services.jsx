@@ -163,7 +163,7 @@ export default function Services() {
 
         {/* CTA */}
         <div className="text-center mt-14">
-          <a href="mailto:michael@maryransom.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-base px-12 py-4">
+          <a href="mailto:Mearansom@gmail.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-base px-12 py-4">
             Let's Work Together &rarr;
           </a>
         </div>

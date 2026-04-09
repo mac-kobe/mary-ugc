@@ -52,7 +52,7 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <a href="mailto:michael@maryransom.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-base px-10 py-4">
+              <a href="mailto:Mearansom@gmail.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-base px-10 py-4">
                 Work With Me
               </a>
               <a href="#videos" className="btn-secondary text-base px-10 py-4">

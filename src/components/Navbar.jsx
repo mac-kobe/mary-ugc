@@ -58,14 +58,14 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a href="mailto:michael@maryransom.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-sm">
+            <a href="mailto:Mearansom@gmail.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-sm">
               Work With Me
             </a>
           </div>
 
           {/* Mobile: CTA + Hamburger */}
           <div className="flex items-center gap-3 md:hidden">
-            <a href="mailto:michael@maryransom.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-sm px-5 py-2.5">
+            <a href="mailto:Mearansom@gmail.com?subject=UGC%20Collaboration%20Inquiry" className="btn-primary text-sm px-5 py-2.5">
               Work With Me
             </a>
             <button

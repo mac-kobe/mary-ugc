@@ -63,7 +63,7 @@ export default function Contact() {
         {/* CTA Buttons - side by side */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="mailto:michael@maryransom.com?subject=UGC%20Collaboration%20Inquiry"
+            href="mailto:Mearansom@gmail.com?subject=UGC%20Collaboration%20Inquiry"
             className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-charcoal text-white font-inter font-semibold rounded-full
                        text-base shadow-warm-lg
                        transition-all duration-200 ease-out
