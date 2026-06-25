@@ -11,6 +11,10 @@ const posterFor = (src) => {
 }
 
 const allVideos = [
+  { title: 'Summer Food', src: `${VIDEO_BASE}/summer-food.mp4`, category: 'Recipe' },
+  { title: 'Salud Pepino Drink', src: `${VIDEO_BASE}/salud-pepino-drink.mp4`, category: 'Drink' },
+  { title: 'Neutrogena', src: `${VIDEO_BASE}/neutrogena.mp4`, category: 'Skincare' },
+  { title: '5-Min Dinner', src: `${VIDEO_BASE}/5-min-dinner.mp4`, category: 'Recipe' },
   { title: 'Drain Catcher Hack', src: `${VIDEO_BASE}/drain-catcher.mp4`, category: 'Product' },
   { title: 'Arroz con Pollo', src: `${VIDEO_BASE}/arroz-recipe.mp4`, category: 'Recipe' },
   { title: 'Breakfast Recipe', src: `${VIDEO_BASE}/breakfast-recipe.mp4`, category: 'Recipe' },

@@ -5,10 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const stats = [
-  { value: 673, suffix: 'K', label: 'Top Video Views' },
-  { value: 38.9, suffix: 'K', label: 'Total Likes', decimals: 1 },
+  { value: 886, suffix: 'K', label: 'Top Video Views' },
+  { value: 43.8, suffix: 'K', label: 'Total Likes', decimals: 1 },
   { value: 3, suffix: '', label: 'Years Creating' },
-  { value: 2.6, suffix: 'K', label: 'Followers & Growing', decimals: 1 },
+  { value: 2.8, suffix: 'K', label: 'Followers & Growing', decimals: 1 },
 ]
 
 export default function SocialProof() {

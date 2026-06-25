@@ -13,13 +13,13 @@ const posterFor = (src) => {
 }
 
 const videos = [
+  { title: 'Summer Food', src: `${VIDEO_BASE}/summer-food.mp4` },
+  { title: 'Salud Pepino Drink', src: `${VIDEO_BASE}/salud-pepino-drink.mp4` },
+  { title: 'Neutrogena', src: `${VIDEO_BASE}/neutrogena.mp4` },
+  { title: '5-Min Dinner', src: `${VIDEO_BASE}/5-min-dinner.mp4` },
   { title: 'Drain Catcher Hack', src: `${VIDEO_BASE}/drain-catcher.mp4` },
-  { title: 'Alani Drink', src: `${VIDEO_BASE}/alani-drink-3.mp4` },
-  { title: 'Korean Skincare', src: `${VIDEO_BASE}/korean-skincare.mp4` },
   { title: 'Penne Recipe', src: `${VIDEO_BASE}/penne-recipe.mp4` },
-  { title: 'Nightly Skincare', src: `${VIDEO_BASE}/nightly-skincare.mp4` },
   { title: 'Ellaola Vitamin', src: `${VIDEO_BASE}/ellaola-vitamin.mp4` },
-  { title: 'Xmas Slippers', src: `${VIDEO_BASE}/xmas-slippers.mp4` },
 ]
 
 export default function VideoShowcase({ onOpenPortfolio }) {

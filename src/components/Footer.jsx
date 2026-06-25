@@ -18,7 +18,7 @@ export default function Footer() {
               Mary Ransom
             </p>
             <p className="font-inter text-sm text-charcoal/50">
-              Content Creator &middot; UGC Specialist
+              Content Creator &middot; UGC Creator
             </p>
           </div>
 

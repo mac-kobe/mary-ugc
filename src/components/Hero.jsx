@@ -35,7 +35,7 @@ export default function Hero() {
             {/* Badge */}
             <div className="hero-badge mb-6">
               <span className="inline-block px-5 py-2 bg-sage/10 text-sage rounded-full text-sm font-inter font-medium tracking-wide">
-                Content Creator &middot; UGC Specialist &middot; Bilingual (EN/ES)
+                Content Creator &middot; UGC Creator &middot; Bilingual (EN/ES)
               </span>
             </div>
 
@@ -78,15 +78,15 @@ export default function Hero() {
             {/* Social Stats */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-charcoal/50 font-inter">
               <span className="flex items-center gap-1.5">
-                <span className="font-semibold text-charcoal/70">2.6K</span> Followers
+                <span className="font-semibold text-charcoal/70">2.8K</span> Followers
               </span>
               <span className="text-charcoal/20">&middot;</span>
               <span className="flex items-center gap-1.5">
-                <span className="font-semibold text-charcoal/70">38.9K</span> Likes
+                <span className="font-semibold text-charcoal/70">43.8K</span> Likes
               </span>
               <span className="text-charcoal/20">&middot;</span>
               <span className="flex items-center gap-1.5">
-                <span className="font-semibold text-charcoal/70">673K</span> Top Video Views
+                <span className="font-semibold text-charcoal/70">886K</span> Top Video Views
               </span>
               <span className="text-charcoal/20">&middot;</span>
               <span className="flex items-center gap-1.5">
@@ -100,7 +100,7 @@ export default function Hero() {
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-warm-lg">
               <img
                 src="/images/hero.png"
-                alt="Mary Ransom — Content Creator and UGC Specialist"
+                alt="Mary Ransom — Content Creator and UGC Creator"
                 className="w-full h-full object-cover"
               />
             </div>
