@@ -4,3 +4,6 @@ dist/
 .vercel/
 .env*.local
 .vercel
+
+# leftover local junk
+public/videos/compressed/

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
+  { label: 'Brands', href: '#about' },
   { label: 'Content', href: '#videos' },
   { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },
@@ -44,7 +44,7 @@ export default function Navbar() {
             href="#"
             className="font-playfair text-xl text-charcoal hover:text-terracotta transition-colors duration-200"
           >
-            Mary Ransom
+            Mary Elizabeth
           </a>
 
           {/* Desktop Navigation */}

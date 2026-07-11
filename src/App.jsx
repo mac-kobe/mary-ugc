@@ -1,11 +1,9 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import BrandCategories from './components/BrandCategories'
+import BrandReviews from './components/BrandReviews'
 import VideoShowcase from './components/VideoShowcase'
 import SocialProof from './components/SocialProof'
-import ContentNiches from './components/ContentNiches'
 import Services from './components/Services'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -19,11 +17,9 @@ function Home() {
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <BrandCategories />
+        <BrandReviews />
         <VideoShowcase onOpenPortfolio={() => navigate('/content')} />
         <SocialProof />
-        <ContentNiches />
         <Services />
         <Contact />
       </main>

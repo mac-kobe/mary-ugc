@@ -109,9 +109,7 @@ export default function SocialProof() {
         </div>
 
         {/* Quote */}
-        <p className="proof-quote font-playfair italic text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-          "The best brand partnerships feel like recommendations from a friend. That's exactly what I create."
-        </p>
+        
       </div>
 
       {/* Wave bottom */}

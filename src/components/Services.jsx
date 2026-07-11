@@ -135,7 +135,7 @@ export default function Services() {
             <div className="rounded-2xl overflow-hidden shadow-warm mb-6">
               <img
                 src="/images/hero-2.jpg"
-                alt="Mary Ransom — Content Creator"
+                alt="Mary Elizabeth — Content Creator"
                 className="w-full h-80 sm:h-96 object-cover"
                 loading="lazy"
               />

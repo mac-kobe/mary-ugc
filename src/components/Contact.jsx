@@ -75,7 +75,7 @@ export default function Contact() {
             Shoot me a message!
           </a>
           <a
-            href="https://www.tiktok.com/@mary_arndt"
+            href="https://www.tiktok.com/@mary_elizabethugc"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-white/20 text-white font-inter font-medium text-base rounded-full hover:bg-white/30 transition-all duration-200 hover:scale-[1.03] backdrop-blur-sm min-h-[44px]"
@@ -83,7 +83,7 @@ export default function Contact() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.71a8.21 8.21 0 004.76 1.52V6.69h-1z" />
             </svg>
-            TikTok @mary_arndt
+            TikTok @mary_elizabethugc
           </a>
         </div>
       </div>
