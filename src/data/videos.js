@@ -39,7 +39,6 @@ export const allVideos = [
 
   // Added Apr 2, 2026
   define('medicube-skincare', 'Medicube Skincare', BEAUTY, '2026-04-02'),
-  define('tarte-makeup', 'Tarte Makeup', BEAUTY, '2026-04-02'),
   define('korean-skincare', 'Korean Skincare', BEAUTY, '2026-04-02'),
   define('korean-skincare-2', 'Korean Skincare #2', BEAUTY, '2026-04-02'),
   define('bloom-drink', 'Bloom Drink', DRINKS, '2026-04-02'),
@@ -95,8 +94,8 @@ export const homeCategories = [
       'flavors-dog-toppers',
       'medicube-skincare',
       'hardshell-case',
-      'tarte-makeup',
       'korean-skincare',
+      'korean-skincare-2',
     ]),
   },
 ]
