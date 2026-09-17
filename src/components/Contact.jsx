@@ -33,7 +33,7 @@ export default function Contact() {
       className="py-28 md:py-40 bg-terracotta relative z-10 mt-[60px]"
     >
       {/* Wave top — cream to terracotta */}
-      <div className="absolute left-0 right-0 bottom-full pointer-events-none">
+      <div className="absolute left-0 right-0 bottom-full translate-y-px pointer-events-none">
         <svg
           viewBox="0 0 1440 60"
           fill="none"

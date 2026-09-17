@@ -69,7 +69,7 @@ export default function SocialProof() {
   return (
     <section ref={sectionRef} className="py-20 md:py-28 bg-terracotta relative z-10 mt-[60px] mb-[60px]">
       {/* Wave top */}
-      <div className="absolute left-0 right-0 bottom-full pointer-events-none">
+      <div className="absolute left-0 right-0 bottom-full translate-y-px pointer-events-none">
         <svg
           viewBox="0 0 1440 60"
           fill="none"
@@ -113,7 +113,7 @@ export default function SocialProof() {
       </div>
 
       {/* Wave bottom */}
-      <div className="absolute left-0 right-0 top-full pointer-events-none">
+      <div className="absolute left-0 right-0 top-full -translate-y-px pointer-events-none">
         <svg
           viewBox="0 0 1440 60"
           fill="none"
@@ -122,7 +122,7 @@ export default function SocialProof() {
           style={{ height: '60px' }}
           preserveAspectRatio="none"
         >
-          <rect width="1440" height="60" fill="#F3EDE4" />
+          <rect width="1440" height="60" fill="#FFF8F0" />
           <path
             d="M0 0H1440V20C1200 50 960 5 720 30C480 55 240 10 0 40V0Z"
             fill="#C4704B"

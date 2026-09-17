@@ -81,24 +81,7 @@ export default function Services() {
   }, [])
 
   return (
-    <section id="services" ref={sectionRef} className="py-20 md:py-28 bg-cream relative z-10 mt-[60px]">
-      {/* Wave top — linen to cream */}
-      <div className="absolute left-0 right-0 bottom-full pointer-events-none">
-        <svg
-          viewBox="0 0 1440 60"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full block"
-          style={{ height: '60px' }}
-          preserveAspectRatio="none"
-        >
-          <rect width="1440" height="60" fill="#F3EDE4" />
-          <path
-            d="M0 35C300 10 600 50 900 25C1100 10 1300 45 1440 30V60H0V35Z"
-            fill="#FFF8F0"
-          />
-        </svg>
-      </div>
+    <section id="services" ref={sectionRef} className="py-20 md:py-28 bg-cream relative z-10">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-14 lg:gap-20">
           {/* Left Column */}
@@ -136,7 +119,7 @@ export default function Services() {
               <img
                 src="/images/hero-2.jpg"
                 alt="Mary Elizabeth — Content Creator"
-                className="w-full h-80 sm:h-96 object-cover"
+                className="w-full h-80 sm:h-96 object-cover object-[50%_15%]"
                 loading="lazy"
               />
             </div>
